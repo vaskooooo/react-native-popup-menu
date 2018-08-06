@@ -229,7 +229,7 @@ export default class Popover extends React.Component {
 
   render() {
     const {
-      style,
+      popupStyle,
       children,
       layouts,
       anchorStyle,
@@ -265,7 +265,7 @@ export default class Popover extends React.Component {
             anchorStyle,
           ]}
         />
-        <View {...other} style={[styles.options, style]}>
+        <View {...other} style={[styles.options, popupStyle]}>
           {children}
         </View>
       </Animated.View>
