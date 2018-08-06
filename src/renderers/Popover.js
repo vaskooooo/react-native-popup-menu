@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { OPEN_ANIM_DURATION, CLOSE_ANIM_DURATION } from '../constants.js';
 
 const popoverPadding = 7;
-const anchorSize = 15;
+const anchorSize = 10;
 const anchorHyp = Math.sqrt(anchorSize*anchorSize + anchorSize*anchorSize);
 const anchorOffset = (anchorHyp + anchorSize) / 2 - popoverPadding;
 
@@ -233,6 +233,7 @@ export default class Popover extends React.Component {
       children,
       layouts,
       anchorStyle,
+      anchorColor,
       preferredPlacement,
       placement: userPlacement,
       ...other
@@ -263,6 +264,7 @@ export default class Popover extends React.Component {
             styles.anchor,
             dynamicAnchorStyle({ placement, offset, isRTL }),
             anchorStyle,
+            { borderTopColor: anchorColor }
           ]}
         />
         <View {...other} style={[styles.options, popupStyle]}>
@@ -312,7 +314,7 @@ const dynamicAnchorStyle = ({ offset, placement, isRTL }) => {
         top: offset,
         transform: [
           { translateX: anchorOffset },
-          { rotate: '45deg' },
+          { rotate: '90deg' },
         ],
       };
     case 'left':
@@ -320,23 +322,23 @@ const dynamicAnchorStyle = ({ offset, placement, isRTL }) => {
         top: offset,
         transform: [
           { translateX: -anchorOffset },
-          { rotate: '45deg' },
+          { rotate: '-90deg' },
         ],
       };
     case 'top':
       return {
         [start]: offset,
         transform: [
-          { translateY: -anchorOffset },
-          { rotate: '45deg' },
+          { translateY: 0 },
+          { rotate: '0deg' },
         ],
       };
     case 'bottom':
       return {
         [start]: offset,
         transform: [
-          { translateY: anchorOffset },
-          { rotate: '45deg' },
+          { translateY: 0 },
+          { rotate: '180deg' },
         ],
       };
   }
@@ -365,9 +367,16 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   anchor: {
-    width: anchorSize,
-    height: anchorSize,
-    backgroundColor: 'white',
-    elevation: 5,
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderLeftWidth: anchorSize,
+    borderRightWidth: anchorSize,
+    borderTopWidth: anchorSize,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: 'white',
+    elevation: 5
   },
 });
